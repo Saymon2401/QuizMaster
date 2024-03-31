@@ -98,6 +98,11 @@ class MainActivity : AppCompatActivity() {
         nextQuestion(countId)
 
         next.setOnClickListener {
+            if (group.checkedRadioButtonId == -1) {
+                Toast.makeText(this, "Пожалуйста, выберите ответ", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             val findOptionIn = group.checkedRadioButtonId
             val findRadioBut = findViewById<RadioButton>(findOptionIn)
             val findOptionText = findRadioBut.text.toString()
@@ -110,8 +115,6 @@ class MainActivity : AppCompatActivity() {
                 falseA++
             }
             group.clearCheck()
-            countQ++
-            countQues.text = countQ.toString()
             trueAnswer.text = trueA.toString()
             falseAnswer.text = falseA.toString()
             countId++
@@ -119,7 +122,14 @@ class MainActivity : AppCompatActivity() {
                 nextQuestion(countId)
             }else{
                 Toast.makeText(this, "Finish", Toast.LENGTH_SHORT).show()
+                 countId = 0
+                 trueA = 0
+                 falseA = 0
+                 countQ = 0
+                 countQ--
             }
+            countQ++
+            countQues.text = countQ.toString()
         }
     }
 
